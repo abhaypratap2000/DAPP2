@@ -12,5 +12,6 @@ routing.post('/approve',control.approve);
 routing.post('/allowance',control.allowance);
 routing.post('/confiscate',control.confiscate);
 routing.get('/address',control.address);
+
 module.exports = {routing};
 
