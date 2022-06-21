@@ -7,7 +7,7 @@ abstract contract ERC20{
     function decimals() public virtual view returns (uint8);
     function totalSupply() public virtual view returns (uint256);
     function balanceOf(address _owner) public virtual view returns (uint256 balance);
-    function transfer(address _to, uint256 _value) public virtual returns (bool success);
+    function transfer(address _to, uint256 _value) public virtual returns (uint256 value);
     function transferFrom(address _from, address _to, uint256 _value) public virtual returns (bool success);
     function approve(address _spender, uint256 _value) public virtual returns (bool success);
     function allowance(address _owner, address _spender) public virtual view returns (uint256 remaining);
@@ -92,10 +92,12 @@ contract Token is ERC20,Owned{
 
       }
 
-        function transfer(address _to, uint256 _value) public override returns (bool success){
-                      balances[_to] += _value;
-                       balances[msg.sender] -= _value;
-          return true;
+        function transfer(address _to, uint256 _value) public override returns (uint256 remain){
+            require(balances[msg.sender]>= _value);
+             balances[_to] += _value;
+             balances[msg.sender] -= _value;
+             emit Transfer(msg.sender , _to , _value);  
+             return _value;
         }                                
    
         function approve(address _spender, uint256 _value) public override  returns (bool success){

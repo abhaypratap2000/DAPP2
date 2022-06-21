@@ -1,3 +1,8 @@
+const Provider = require('@truffle/hdwallet-provider');
+const address = '0xFce453aA73177E63f24530ea106ee75d478a5cb1';
+const privateKey = '61f84609b0c5c7cf36f01eb84af270c109bfcdd790db99af5fc4bec2315bc313';
+const provider1 = 'https://rinkeby.infura.io/v3/cba9c1d8b5ab4c2193bbd20ed721f374';
+
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -40,7 +45,7 @@ module.exports = {
     // You should run a client (like ganache, geth, or parity) in a separate terminal
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
-    //
+    // //
     development: {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 7545,            // Standard Ethereum port (default: none)
@@ -59,9 +64,9 @@ module.exports = {
     //
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
-    // ropsten: {
-    //   provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-    //   network_id: 3,       // Ropsten's id
+    rinkeby: {
+      provider: () => new Provider(privateKey,provider1),
+      network_id: 4,       // Ropsten's id
     //   gas: 5500000,        // Ropsten has a lower block limit than mainnet
     //   confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
     //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
@@ -73,7 +78,7 @@ module.exports = {
     //   provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
     //   network_id: 2111,   // This network is yours, in the cloud.
     //   production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+     }
   },
 
   // Set default mocha options here, use special reporters, etc.
