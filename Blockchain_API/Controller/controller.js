@@ -1,6 +1,3 @@
-// from 0xFce453aA73177E63f24530ea106ee75d478a5cb1
-// to 0x06FFdb895116eAccbEd57460C6EE1693eb13c3Bf
-
 const express = require("express");
 const Web3 = require("web3");
 const accounts = require("web3-eth-accounts");
@@ -25,19 +22,22 @@ const getdata = (req, res) => {
 };
 const transfer = async (req, res) => {
   // const address2 = await address();
+  const _from = req.body.from;
+  const _to = req.body.to;
   const _value = req.body.value;
+  const _nonce1 = REQ.body.nonce;
   console.log(_value);
   const _nonce = await web3.eth.getTransactionCount(
-    "0x9Ac701D8f749832F4FE17bf26370d3e1e4667946"
+    _nonce1
   );
 
   const transfer1 = await cont1.methods
-    .transfer('0x4e4CAaF74c44F2C72ebaF699561A6bFc2C4D09EB', _value);
+    .transfer(_to, _value);
   const data = transfer1.encodeABI();
 
   const transaction =
   {
-    from: '0x9Ac701D8f749832F4FE17bf26370d3e1e4667946',
+    from: _from,
     nonce: _nonce,
     gasPrice: "200000",
     gas: "300000",
@@ -56,38 +56,44 @@ const transfer = async (req, res) => {
   // res.send(signedTx);
 };
 const mint = async (req, res) => {
+  const _from = req.body.from;
   const mint1 = await cont1.methods
     .mint(10)
-    .send({ from: "0x27627D3C4F48C832A27c2B17bacf11Ef3AcEeED8" });
+    .send({ from: _from });
   console.log(mint1);
   res.send(mint1);
 };
 
 const approve = async (req, res) => {
+  const _to = req.body.to;
+  const _from = req.body.from;
   const approve1 = await cont1.methods
-    .approve("0x5cE170Ca39f4dC72717798621C3f80911Cc82F68", 1000)
-    .send({ from: "0xFB8A9ea376d48739E85B508f1dBCf348Ec86F570" });
+    .approve(_to, 1000)
+    .send({ from: _from });
   res.send(approve1);
   console.log(approve1);
 };
 
 const transferFrom = async (req, res) => {
+  const _nonce1 = REQ.body.nonce;
   const _value = req.body.value;
+  const _from = req.body.from;
+  const _to = req.body.to;
   console.log(_value);
   const _nonce = await web3.eth.getTransactionCount(
-    "0xFB8A9ea376d48739E85B508f1dBCf348Ec86F570"
+    _nonce1
   );
   const transfer1 = await cont1.methods
     .transferFrom(
-      "0xfb8a9ea376d48739e85b508f1dbcf348ec86f570",
-      "0x5cE170Ca39f4dC72717798621C3f80911Cc82F68",
+      _from,
+      _to,
       _value
     );
   const data = transfer1.encodeABI();
 
   const transaction =
   {
-    from: "0xfb8a9ea376d48739e85b508f1dbcf348ec86f570",
+    from: _from,
     nonce: _nonce,
     gasPrice: "2000000",
     gas: "1000000",
@@ -109,28 +115,32 @@ const transferFrom = async (req, res) => {
 
 
 const balanceOf = async (req, res) => {
+  const addressofacc = req.body.address;
   balance = await cont1.methods
-    .balanceOf("0x4e4CAaF74c44F2C72ebaF699561A6bFc2C4D09EB")
-    .call({ from: "0x4e4CAaF74c44F2C72ebaF699561A6bFc2C4D09EB" });
+    .balanceOf(addressofacc)
+    .call({ from: addressofacc });
   res.send(balance);
   console.log(balance);
 };
 const allowance = async (req, res) => {
+  const _from = req.body.from;
+  const _to = req.body.to;
   const allowance1 = await cont1.methods
     .allowance(
-      "0xFB8A9ea376d48739E85B508f1dBCf348Ec86F570",
-      "0x5cE170Ca39f4dC72717798621C3f80911Cc82F68"
+      _from,
+      _to
     )
-    .call({ from: "0xFB8A9ea376d48739E85B508f1dBCf348Ec86F570" });
+    .call({ from: _from });
 
   res.send(allowance1);
   console.log(allowance1);
 };
 
 const confiscate = async (req, res) => {
+  const _from = req.body.from;
   const confiscate1 = await cont1.methods
-    .confiscate("0x27627D3C4F48C832A27c2B17bacf11Ef3AcEeED8", 2)
-    .send({ from: "0x27627D3C4F48C832A27c2B17bacf11Ef3AcEeED8" });
+    .confiscate(_from, 2)
+    .send({ from: _from });
   res.send(confiscate1);
   console.log(confiscate1);
 };
@@ -144,14 +154,6 @@ const address = async (req, res) => {
 
 
 }
-
-
-
-
-
-
-
-
 
 
 
